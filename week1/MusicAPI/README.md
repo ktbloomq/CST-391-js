@@ -22,7 +22,7 @@ API source template:
 | PUT | http://localhost:5000/albums | update an album |
 | DELETE | http://localhost:5000/albums/# | delete an album |
 
-## Command
+## Commands
 start the api
 ```
 npm run start
