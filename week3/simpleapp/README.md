@@ -6,11 +6,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Responsive test
+## Responsive Webpage Test
 bootstrap grid expanded. 
 ![expanded view](./bootstrap-grid-expanded.png)
 bootstrap grid collapsed
 ![collapsed view](./bootstrap-grid-collapsed.png)
+
+## Form Screenshots
+before username is input
+![user form](.//user-form.png)
+form submission output
+![product form debug](./form-output.png)
 
 ## Research
 1. @Input indicates that the given field can be set in its html tag. 
