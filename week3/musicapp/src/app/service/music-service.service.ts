@@ -11,16 +11,19 @@ export class MusicServiceService {
 	private readonly artists: Artist[] = [];
 	private readonly albums: Album[] = [];
 
+	// construct Music Service
 	constructor() {
 		this.createArtists();
 		this.createAlbums();
 	}
 
+	// placeholder for create artists
 	private createArtists(): void {
 		this.artists.push(new Artist(0, 'The Beatles'));
 	}
 
 	private createAlbums(): void {
+		// load albums from exampledata
 		exampledata.forEach((data: any) => {
 			if (data.artist === 'The Beatles') {
 				const tracks = data.tracks.map((trackData: any) => new Track(trackData.id, trackData.number, trackData.title, trackData.lyrics, trackData.video));
@@ -38,6 +41,7 @@ export class MusicServiceService {
 		return this.albums;
 	}
 
+	// get album by artist and id
 	public getAlbum(artist: string, id: number): Album | undefined {
 		const album = this.albums.find((a) => a.Artist === artist && a.Id === id);
 
@@ -49,6 +53,7 @@ export class MusicServiceService {
 		return undefined;
 	}
 
+	// add new album to list
 	public createAlbum(album: Album): void {
 		this.albums.push(album);
 	}
