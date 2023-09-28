@@ -1,56 +1,85 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import SearchForm from "./SearchForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import SearchAlbum from "./SearchAlbum";
+import NavBar from "./NavBar";
+import NewAlbum from "./NewAlbum";
+import OneAlbum from "./OneAlbum";
 import dataSource from "./dataSource";
 
+
 const App = () => {
-    const [searchPhrase,setSearchPhrase] = useState("");
+    const [searchPhrase, setSearchPhrase] = useState("");
     const [albumList, setAlbumList] = useState([]);
-
+    const [selectedAlbumId, setSelectedAlbumId] = useState(0);
     let refresh = false;
-
-    const updateSearchResults = (phrase) => {
-        console.log("phrase is " + phrase);
-        setSearchPhrase(phrase);
-    }
 
     const loadAlbums = async () => {
         const response = await dataSource.get("/albums");
 
         setAlbumList(response.data);
+        // console.log("albumList", albumList);
     }
 
     useEffect(() => {
         loadAlbums();
     }, [refresh]);
 
-    const renderedList = function() {
-        return albumList.map((album) => {
-            if(album.description.toLowerCase().includes(searchPhrase.toLowerCase()) || searchPhrase === "") {
-                return (
-                    <div className="col">
-                        <Card 
-                        key={album.id}
-                        albumTitle={album.title}
-                        albumDescription={album.description}
-                        imgURL={album.image}
-                        buttonText="OK"
-                        />
-                    </div>
-                );
+    const updateSearchResults = (phrase) => {
+        console.log("phrase is " + phrase);
+        setSearchPhrase(phrase);
+    }
+
+    const renderedList = albumList.filter((album) => {
+        if (
+            album.description.toLowerCase().includes(searchPhrase.toLowerCase()) || 
+            searchPhrase === "") {
+
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    const updateSingleAlbum = (id, navigate) => {
+        console.log('Update Single album ', id);
+        console.log('Update Single album ', navigate);
+
+        let indexNumber = 0;
+        for(let i=0; i < albumList.length; i++) {
+            if(albumList[i].albumId === id) {
+                indexNumber = i;
             }
-            return ("");
-        });
-    };
+        }
+
+        setSelectedAlbumId(indexNumber);
+        console.log('update path', '/show/' + indexNumber);
+        navigate('/show/'+ indexNumber);
+    }
 
     return (
-        <div className="container">
-            <SearchForm onSubmit={updateSearchResults} />
-
-            <div className="row g-3">
-                {renderedList()}
-            </div>
-        </div>
+        <BrowserRouter>
+            <NavBar />
+            <Routes>
+                <Route
+                    exact
+                    path="/"
+                    element={
+                        <SearchAlbum
+                            updateSearchResults={updateSearchResults}
+                            albumList={renderedList}
+                            updateSingleAlbum={updateSingleAlbum}
+                        />
+                    }
+                />
+                <Route exact path="/new" element={<NewAlbum />} />
+                <Route
+                    exact
+                    path="/show/:albumId"
+                    element={<OneAlbum album={albumList[selectedAlbumId]} />}
+                />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
