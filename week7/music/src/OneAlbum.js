@@ -17,7 +17,7 @@ const OneAlbum = (props) => {
                     key={props.album.id}
                     album={props.album}
                     onTrackSelect={handleTrackSelect}
-                    buttonText="Edit"
+                    buttonText="OK"
                 />
                 <div className="col">
                     <div className="card">

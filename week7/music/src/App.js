@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import SearchAlbum from "./SearchAlbum";
 import NavBar from "./NavBar";
-import NewAlbum from "./NewAlbum";
+import EditAlbum from "./EditAlbum";
 import OneAlbum from "./OneAlbum";
 import dataSource from "./dataSource";
 
@@ -39,7 +39,7 @@ const App = () => {
         }
     });
 
-    const updateSingleAlbum = (id, navigate) => {
+    const updateSingleAlbum = (id, navigate, uri) => {
         console.log('Update Single album ', id);
         console.log('Update Single album ', navigate);
 
@@ -51,11 +51,12 @@ const App = () => {
         }
 
         setSelectedAlbumId(indexNumber);
-        console.log('update path', '/show/' + indexNumber);
-        navigate('/show/'+ indexNumber);
+        let path = uri + indexNumber
+        console.log('path', path);
+        navigate(path);
     }
 
-    const onNewAlbum = function(navigate) {
+    const onEditAlbum = function(navigate) {
         loadAlbums();
         navigate('/');
     }
@@ -75,7 +76,8 @@ const App = () => {
                         />
                     }
                 />
-                <Route exact path="/new" element={<NewAlbum onNewAlbum={onNewAlbum} />} />
+                <Route exact path="/new" element={<EditAlbum onEditAlbum={onEditAlbum} />} />
+                <Route exact path="/edit/:albumId" element={<EditAlbum onEditAlbum={onEditAlbum} album={albumList[selectedAlbumId]} />} />
                 <Route
                     exact
                     path="/show/:albumId"

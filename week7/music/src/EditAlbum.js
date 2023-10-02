@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import dataSource from "./dataSource";
 
-const NewAlbum = (props) => {
+const EditAlbum = (props) => {
     const [title,setTitle] = useState('');
     const [artist,setArtist] = useState('');
     const [description,setDescription] = useState('');
@@ -11,18 +11,47 @@ const NewAlbum = (props) => {
     const [image,setImage] = useState('');
     const navigate = useNavigate();
 
+    let album = {
+        title: '',
+        artist: '',
+        description: '',
+        year: '',
+        image: '',
+        tracks: [],
+    };
+    let isNewAlbum = true;
+
+    if(props.album) {
+        album = props.album;
+        isNewAlbum = false;
+    }
+
+    useEffect(() => {
+        setTitle(album.title);
+        setArtist(album.artist);
+        setDescription(album.description);
+        setYear(album.year);
+        setImage(album.image);
+    }, []);
+
     const saveAlbum = async (album) => {
-        const response = await dataSource.post('/albums', album);
+        let response;
+        if(isNewAlbum) {
+            response = await dataSource.post('/albums', album);
+        } else {
+            response = await dataSource.put('/albums', album);
+        }
         console.log(response);
         console.log(response.data);
-        props.onNewAlbum(navigate);
+        props.onEditAlbum(navigate);
     }
 
     const handleFormSubmit = function(event) {
         event.preventDefault();
 
         console.log('submit');
-        const album = {
+        const editedAlbum = {
+            albumId: album.albumId,
             title:title,
             artist:artist,
             description:description,
@@ -30,9 +59,9 @@ const NewAlbum = (props) => {
             image: image,
             tracks: [],
         };
-        console.log(album);
+        console.log(editedAlbum);
 
-        saveAlbum(album);
+        saveAlbum(editedAlbum);
     };
     const updateTitle = function(event) {
         setTitle(event.target.value);
@@ -53,25 +82,25 @@ const NewAlbum = (props) => {
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <h1>Create Album</h1>
+            <h1>{isNewAlbum ? "Create New" : "Edit"}</h1>
             <div className="mb-3">
-                <label for="albumTitle" className="form-label">Album Title</label>
+                <label className="form-label">Album Title</label>
                 <input type="text" className="form-control" id="albumTitle" value={title} onChange={updateTitle} />
             </div>
             <div className="mb-3">
-                <label for="albumArtist" className="form-label">Artist</label>
+                <label className="form-label">Artist</label>
                 <input type="Text" className="form-control" id="albumArtist" value={artist} onChange={updateArtist} />
             </div>
             <div className="mb-3">
-                <label for="albumDescription" className="form-label">Description</label>
+                <label className="form-label">Description</label>
                 <input type="Text" className="form-control" id="albumDescription" value={description} onChange={updateDescription} />
             </div>
             <div className="mb-3">
-                <label for="albumYear" className="form-label">Year</label>
+                <label className="form-label">Year</label>
                 <input type="Text" className="form-control" id="albumYear" value={year} onChange={updateYear} />
             </div>
             <div className="mb-3">
-                <label for="albumImage" className="form-label">Image</label>
+                <label className="form-label">Image</label>
                 <input type="Text" className="form-control" id="albumImage" value={image} onChange={updateImage} />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
@@ -79,4 +108,4 @@ const NewAlbum = (props) => {
     );
 };
 
-export default NewAlbum;
+export default EditAlbum;

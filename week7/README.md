@@ -10,6 +10,10 @@ In this update, I updated the UI to include track information. Each album card n
 
 ![album details](./music_screenshot1.png)
 
-### Part 3
+### Part 2
 In this update, I added the ability to create an album and add it to the database.
 ![create album](./music_screenshot2.png)
+
+### Part 3
+In this update, NewAlbum has been changed to EditAlbum. This component contains logic to both create and edit albums. If the component is passed an existing album, it assumes the edit role Otherwise, it creates a new album.
+![edit album](./music_screenshot3.png)

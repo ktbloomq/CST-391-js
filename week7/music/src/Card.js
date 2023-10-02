@@ -12,7 +12,8 @@ const Card = (props) => {
                     <h5 className="card-title">{props.album.title}</h5>
                     <p className="card-text overflow-hidden">{props.album.description}</p>
                     <TrackList tracks={props.album.tracks} onClick={props.onTrackSelect} />
-                    <button href="#" className="btn btn-primary" onClick={ () => {props.onClick(props.album.albumId)}}>{props.buttonText}</button>
+                    <button href="#" className="btn btn-primary" onClick={ () => {props.onClick(props.album.albumId, '/show/')}}>{props.buttonText}</button>
+                    <button href="#" className="btn btn-secondary" onClick={ () => {props.onClick(props.album.albumId, '/edit/')}}>Edit</button>
                 </div>
             </div>
         </div>
