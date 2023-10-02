@@ -55,6 +55,11 @@ const App = () => {
         navigate('/show/'+ indexNumber);
     }
 
+    const onNewAlbum = function(navigate) {
+        loadAlbums();
+        navigate('/');
+    }
+
     return (
         <BrowserRouter>
             <NavBar />
@@ -70,7 +75,7 @@ const App = () => {
                         />
                     }
                 />
-                <Route exact path="/new" element={<NewAlbum />} />
+                <Route exact path="/new" element={<NewAlbum onNewAlbum={onNewAlbum} />} />
                 <Route
                     exact
                     path="/show/:albumId"

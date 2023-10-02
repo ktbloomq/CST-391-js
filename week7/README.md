@@ -9,3 +9,7 @@ This demo showcases how an array can be dynamically modified in React. Here, blo
 In this update, I updated the UI to include track information. Each album card now displays a list of tracks. In the detailed view, these tracks can be clicked to reveal the lyrics for the song, and a link to play the track.
 
 ![album details](./music_screenshot1.png)
+
+### Part 3
+In this update, I added the ability to create an album and add it to the database.
+![create album](./music_screenshot2.png)
