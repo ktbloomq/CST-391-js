@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card";
 
 const OneAlbum = (props) => {
+    const [selectedTrack, setSelectedTrack] = useState(props.album.tracks[0]);
     console.log("OneAlbum props", props);
+
+    const handleTrackSelect = function(index) {
+        setSelectedTrack(props.album.tracks[index]);
+        // console.log('selected track', selectedTrack);
+    }
+
     return (
         <div className="container">
             <div className="row g-3">
                 <Card
                     key={props.album.id}
-                    albumTitle={props.album.title}
-                    albumDescription={props.album.description}
-                    imgURL={props.album.image}
+                    album={props.album}
+                    onTrackSelect={handleTrackSelect}
                     buttonText="Edit"
                 />
                 <div className="col">
                     <div className="card">
-                        <p>Show the lyrics of selected track here</p>
+                        <div className="card-body" style={{ whiteSpace: "pre-line"}}>{selectedTrack.lyrics}</div>
                     </div>
                     <div className="card">
-                        <p>Show the YouTube Video of selected track here</p>
+                        <a className="card-body" href={selectedTrack.video}>{selectedTrack.video}</a>
                     </div>
                 </div>
             </div>

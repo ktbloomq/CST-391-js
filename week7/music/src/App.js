@@ -12,18 +12,16 @@ const App = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [albumList, setAlbumList] = useState([]);
     const [selectedAlbumId, setSelectedAlbumId] = useState(0);
-    let refresh = false;
 
     const loadAlbums = async () => {
         const response = await dataSource.get("/albums");
 
         setAlbumList(response.data);
-        // console.log("albumList", albumList);
     }
 
     useEffect(() => {
         loadAlbums();
-    }, [refresh]);
+    }, []);
 
     const updateSearchResults = (phrase) => {
         console.log("phrase is " + phrase);

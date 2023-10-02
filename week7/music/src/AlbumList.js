@@ -4,22 +4,20 @@ import { useNavigate } from "react-router-dom"
 
 const AlbumList = (props) => {
     const handleSelectionOne = (albumId) => {
-        console.log('Selected ID is ', albumId);
+        // console.log('Selected ID is ', albumId);
         props.onClick(albumId, navigator);
     };
 
-    console.log('props albumList ', props);
+    // console.log('props albumList ', props);
     const navigator = useNavigate();
     const albums = props.albumList.map((album) => {
         return (
             <Card
                 key={album.albumId}
-                albumId={album.albumId}
-                albumTitle={album.title}
-                albumDescription={album.description}
-                imgURL={album.image}
+                album={album}
                 buttonText="OK"
                 onClick={handleSelectionOne}
+                onTrackSelect={() => {}}
             />
         );
     });
